@@ -405,14 +405,16 @@ void options_read(int argc, char **argv, qiv_image *q)
             strcpy(tmp,image_names[0]);
         }
         rreaddir(dirname(image_names[0]),0);
-        filter_images(&images,image_names);
+        if(filter)
+            filter_images(&images,image_names);
         if(need_sort)
             qsort(image_names, images, sizeof *image_names, my_strcmp);
         image_idx = find_image(images,image_names,tmp);
         free(tmp);
     }
     else {
-        filter_images(&images,image_names);
+        if(filter)
+            filter_images(&images,image_names);
         if(need_sort)
             qsort(image_names, images, sizeof *image_names, my_strcmp);
     }

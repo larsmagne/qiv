@@ -272,7 +272,7 @@ void filter_images(int *images, char **image_names)
 #ifdef HAVE_MAGIC
   magic_t cookie;
 
-  cookie = magic_open(MAGIC_NONE);
+  cookie = magic_open(MAGIC_SYMLINK | MAGIC_NO_CHECK_ASCII);
   magic_load(cookie,NULL);
 #endif
 
