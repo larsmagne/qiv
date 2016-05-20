@@ -193,9 +193,14 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
         q->exposed = 1;
         qiv_set_cursor_timeout(q);
       }
-      if(fullscreen) {
-        if(center) center_image(q);
+      if(center) center_image(q);
+      if(fullscreen)
+      {
         update_image(q, FULL_REDRAW);
+      }
+      else
+      {
+        update_image(q, MIN_REDRAW);
       }
       break;
 
