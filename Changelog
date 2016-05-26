@@ -36,6 +36,9 @@ Authors:
 
 2.3.2pre
 ========
+  26.05.2016        [tw] Fix small artefacts in pictures which might 
+                         happen when running remote over slow link
+                         (patch by Derek Schrock)
   20.05.2016        [tw] update image after it is exposed in window mode
   12.05.2016        [js/tw] fix broken "-no-filter" option
                             libmagic filter now works on symlinks

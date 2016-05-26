@@ -262,7 +262,6 @@ void qiv_load_image(qiv_image *q)
 
   if (first) {
     setup_win(q);
-    first = 0;
   }
   
   check_size(q, TRUE);
@@ -366,7 +365,7 @@ static void setup_win(qiv_image *q)
       gdk_window_resize(q->win, q->win_w, q->win_h);
     }
    if (!(to_root || to_root_t || to_root_s))
-    gdk_window_show(q->win);
+    gdk_window_lower(q->win);
 
   } else { /* fullscreen */
 
@@ -771,6 +770,12 @@ void update_image(qiv_image *q, int mode)
     };
     gdk_window_set_geometry_hints(q->win, &geometry,
       GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE | GDK_HINT_WIN_GRAVITY);
+
+    if(first) {
+      gdk_window_show(q->win);
+      first = 0;
+    }
+
     gdk_window_move_resize(q->win, q->win_x, q->win_y, q->win_w, q->win_h);
 
     if (!q->error) {
@@ -859,6 +864,12 @@ void update_image(qiv_image *q, int mode)
     q->text_ow = q->text_w;
     q->text_oh = q->text_h;
     q->statusbar_was_on = statusbar_fullscreen;
+
+    if(first) {
+      gdk_window_show(q->win);
+      first = 0;
+    }
+
     gdk_window_move_resize(q->win, monitor[q->mon_id].x, monitor[q->mon_id].y,
         monitor[q->mon_id].width, monitor[q->mon_id].height);
   }
