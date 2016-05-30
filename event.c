@@ -228,26 +228,6 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
         // printf("GDK_CONFIGURE get_root_origin  %d %d\n",
         //        magnify_img.frame_x, magnify_img.frame_y);
       }
-      // gdk_draw_rectangle(q->win, q->status_gc, 1, 10, 10, 50, 50);
-      if (statusbar_window && !fullscreen) {
-#ifdef DEBUG
-        g_print("*** print statusbar at (%d, %d)\n", MAX(2,q->win_w-q->text_w-10), MAX(2,q->win_h-q->text_h-10));
-#endif
-        // printf(">>> statusbar_w %d %d %d %d\n",
-        //        MAX(2,q->win_w-text_w-10), MAX(2,q->win_h-text_h-10), text_w+5, text_h+5);
-
-        gdk_draw_rectangle(q->win, q->bg_gc, 0,
-                           MAX(2,q->win_w-q->text_w-10), MAX(2,q->win_h-q->text_h-10),
-                           q->text_w+5, q->text_h+5);
-        gdk_draw_rectangle(q->win, q->status_gc, 1,
-                           MAX(3,q->win_w-q->text_w-9), MAX(3,q->win_h-q->text_h-9),
-                           q->text_w+4, q->text_h+4);
-
-        pango_layout_set_text(layout, q->win_title, -1);
-        pango_layout_get_pixel_size (layout, &(q->text_w), &(q->text_h));
-        gdk_draw_layout (q->win, q->text_gc, MAX(5,q->win_w-q->text_w-7),  MAX(5,q->win_h-7-q->text_h), layout);
-      }
-
       break;
 
     case GDK_BUTTON_PRESS:
