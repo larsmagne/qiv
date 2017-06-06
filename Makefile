@@ -34,7 +34,7 @@ COMPRESS_PROG = gzip -9f
 
 # Comment this line out if your system doesn't have lcms2 installed
 # (for minimal Color Management support)
-LCMS = -DSUPPORT_LCMS
+#LCMS = -DSUPPORT_LCMS
 
 # Comment this line out if you do not want to use libmagic to
 # identify if a file is an image
@@ -51,15 +51,15 @@ EXIF = -DHAVE_EXIF
 
 CC        = gcc
 #CFLAGS    = -O0 -g -Wall
-CFLAGS    = -O2 -Wall \
+#CFLAGS    = -O2 -Wall -m32\
 	    -fcaller-saves -ffast-math -fno-strength-reduce \
 	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
-#CFLAGS    = -O2 -Wall -fomit-frame-pointer -finline-functions \
-#	    -fcaller-saves -ffast-math -fno-strength-reduce \
-#	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
+CFLAGS    = -O2 -Wall -fomit-frame-pointer -finline-functions \
+	    -fcaller-saves -ffast-math -fno-strength-reduce \
+	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
 
 INCLUDES  := $(shell pkg-config --cflags gdk-2.0 imlib2)
-LIBS      := $(shell pkg-config --libs gdk-2.0 imlib2) -lX11 -lXext
+LIBS      := $(shell pkg-config --libs gdk-2.0 imlib2) -lX11
 
 # [as] thinks that this is not portable enough:
 # [lc] I use a virtual screen of 1600x1200, and the resolution is 1024x768,

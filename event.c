@@ -915,7 +915,7 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
             watch_file ^= 1;
             snprintf(infotext, sizeof infotext, watch_file ?
                      "(File watching: on)" : "(File watching: off)");
-            update_image(q, REDRAW);
+            update_image(q, MIN_REDRAW);
             if(watch_file){
               // check every 100ms
               g_timeout_add_full(G_PRIORITY_DEFAULT_IDLE, 100, qiv_watch_file, q, NULL);
@@ -952,7 +952,7 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
             to_root=1;
             set_desktop_image(q);
             snprintf(infotext, sizeof infotext, "(Centered image on background)");
-            update_image(q, REDRAW);
+            update_image(q, MIN_REDRAW);
             to_root=0;
             break;
 
@@ -962,7 +962,7 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
             to_root_t=1;
             set_desktop_image(q);
             snprintf(infotext, sizeof infotext, "(Tiled image on background)");
-            update_image(q, REDRAW);
+            update_image(q, MIN_REDRAW);
             to_root_t=0;
             break;
 
@@ -970,7 +970,7 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
             to_root_s=1;
             set_desktop_image(q);
             snprintf(infotext, sizeof infotext, "(Stretched image on background)");
-            update_image(q, REDRAW);
+            update_image(q, MIN_REDRAW);
             to_root_s=0;
             break;
 
