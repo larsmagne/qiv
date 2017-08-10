@@ -36,6 +36,7 @@ Authors:
 
 2.3.2pre
 ========
+  10.08.2017        [tw] Don't try to rotate if file is not an image
   06.06.2017        [tw] get rid of some more XID collisions
   30.05.2016        [tw] Fix occasionally erratic behaviour of qiv statusbar
                     [tw] Fix xpm autodetection with libmagic

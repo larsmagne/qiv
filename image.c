@@ -234,31 +234,31 @@ void qiv_load_image(qiv_image *q)
     q->error = 0;
     q->orig_w = imlib_image_get_width();
     q->orig_h = imlib_image_get_height();
-  }
 
-  if (rotation > 10) {
-    /* conditional rotation -- apply rotation only if image fits better */
-    int screen_is_wide = monitor[q->mon_id].width > monitor[q->mon_id].height;
-    int image_is_wide = q->orig_w > q->orig_h;
-    int does_not_fit = q->orig_w > monitor[q->mon_id].width || q->orig_h > monitor[q->mon_id].height;
-    if (screen_is_wide != image_is_wide && does_not_fit)
-      rot = rotation - 10; /* we want the rotation (will be 11 -> 1 or 13 -> 3) */
-    else
-      rot = 0; /* don't rotate */
-  } else
-    rot = rotation;
+    if (rotation > 10) {
+      /* conditional rotation -- apply rotation only if image fits better */
+      int screen_is_wide = monitor[q->mon_id].width > monitor[q->mon_id].height;
+      int image_is_wide = q->orig_w > q->orig_h;
+      int does_not_fit = q->orig_w > monitor[q->mon_id].width || q->orig_h > monitor[q->mon_id].height;
+      if (screen_is_wide != image_is_wide && does_not_fit)
+        rot = rotation - 10; /* we want the rotation (will be 11 -> 1 or 13 -> 3) */
+      else
+        rot = 0; /* don't rotate */
+    } else
+      rot = rotation;
 
-  if (rot) {
-    imlib_image_orientate(rot);
-    if (rot != 2) {
-      swap(&q->orig_w, &q->orig_h);
-      swap(&q->win_w, &q->win_h);
+    if (rot) {
+      imlib_image_orientate(rot);
+      if (rot != 2) {
+        swap(&q->orig_w, &q->orig_h);
+        swap(&q->win_w, &q->win_h);
+      }
     }
+
+    if (rot && rot != 2)
+      correct_image_position(q);
+
   }
-
-
-  if (rot && rot != 2)
-    correct_image_position(q);
 
   if (first) {
     setup_win(q);
