@@ -644,9 +644,6 @@ void reset_coords(qiv_image *q)
     q->win_w = fixed_window_size;
     q->win_h = q->orig_h * w_o_ratio;
   } else {
-    if (fixed_zoom_factor) {
-      zoom_factor = fixed_zoom_factor; /* reset zoom */
-    }
     q->win_w = (gint)(q->orig_w * (1 + zoom_factor * 0.1));
     q->win_h = (gint)(q->orig_h * (1 + zoom_factor * 0.1));
   }

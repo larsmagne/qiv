@@ -332,7 +332,7 @@ void options_read(int argc, char **argv, qiv_image *q)
                 break;
             case 'T': watch_file=1;
                 break;
-            case 'W': fixed_zoom_factor = (checked_atoi(optarg) - 100) / 10;
+            case 'W': fixed_zoom_factor = (checked_atoi(optarg) - 100) / 10; zoom_factor = fixed_zoom_factor;
                 break;
             case 'X': user_screen = checked_atoi(optarg);
 //               g_print("set xinerama screen: %i\n", user_screen);
