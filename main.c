@@ -84,7 +84,7 @@ int main(int argc, char **argv)
       g_print("qiv: cannot create source color profile.\n");
       usage(argv[0],1);
     }
-      
+
     if (display_profile) {
       h_display_profile = cmsOpenProfileFromFile(display_profile, "r");
     } else {
@@ -125,14 +125,14 @@ int main(int argc, char **argv)
   {
       gdk_screen_get_monitor_geometry(screen, i, &monitor[i]);
   }
-  
+
   if(user_screen < num_monitors)
   {
     main_img.mon_id = user_screen;
   }
 
  /* statusbar with pango */
-  layout = pango_layout_new(gdk_pango_context_get()); 
+  layout = pango_layout_new(gdk_pango_context_get());
   fontdesc = pango_font_description_from_string (STATUSBAR_FONT);
 
   /* set fontsize to 8 if no fontsize is given */
@@ -141,7 +141,19 @@ int main(int argc, char **argv)
     pango_font_description_set_size(fontdesc,  PANGO_SCALE * STATUSBAR_FS);
   }
   metrics = pango_context_get_metrics (gdk_pango_context_get(), fontdesc, NULL);
-  pango_layout_set_font_description (layout, fontdesc); 
+  pango_layout_set_font_description (layout, fontdesc);
+
+ /* jpeg comment with pango */
+  layoutComment = pango_layout_new(gdk_pango_context_get());
+  fontdescComment = pango_font_description_from_string (COMMENT_FONT);
+
+  /* set fontsize to 8 if no fontsize is given */
+  if(!pango_font_description_get_size(fontdescComment))
+  {
+    pango_font_description_set_size(fontdescComment,  PANGO_SCALE * COMMENT_FS);
+  }
+  metricsComment = pango_context_get_metrics (gdk_pango_context_get(), fontdescComment, NULL);
+  pango_layout_set_font_description (layoutComment, fontdescComment);
 
   max_rand_num = images;
 
@@ -154,6 +166,7 @@ int main(int argc, char **argv)
 
   color_alloc(STATUSBAR_BG, &text_bg);
   color_alloc(ERROR_BG, &error_bg);
+  color_alloc(COMMENT_BG, &comment_bg);
   color_alloc(image_bg_spec, &image_bg);
 
   /* Display first image first, except in random mode */

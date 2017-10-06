@@ -98,6 +98,9 @@ Disable statusbar.
 .B \-I, \-\-statusbar
 Enable statusbar.
 .TP
+.B \-J, \-\-showJPEGcomments
+Enable display of comment lines (in JPEG images).
+.TP
 .B \-p, \-\-transparency
 Enable transparency for transparent images.
 .TP
@@ -243,6 +246,7 @@ jb\fIx\fR<return>        jump backward \fIx\fR images
 enter/return       reset zoom, rotation and color settings
 E                  display Exif information
 i                  statusbar on/off
+J                  JPEG comments on/off
 I                  iconify window
 w                  watch file on/off
 x                  center image on background
@@ -262,8 +266,8 @@ Button 2                            quit
 Button 3                            previous picture
 Wheel Up                            next picture
 Wheel Dn                            previous picture
-Wheel Lt/Button back                zoom out (10%)
-Wheel Rt/Button forward             zoom in (10%)
+Wheel Left/Button back              zoom out (10%)
+Wheel Right/Button forward          zoom in (10%)
 .EE
 .SH DELETING
 qiv doesn't actually delete files. It creates a directory named ".qiv-trash"

@@ -583,12 +583,22 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
             update_image(q, MIN_REDRAW);
             break;
 
+            /* jpeg comments on/off  */
+
+          case 'J':
+            exit_slideshow = FALSE;
+            comment_window ^= 1;
+            snprintf(infotext, sizeof infotext, comment_window ?
+                     "(Comments: on)" : "(Comments: off)");
+            update_image(q, MIN_REDRAW);
+            break;
+
             /* Slide show on/off */
 
           case 's':
             exit_slideshow = FALSE;
             slide ^= 1;
-            if (slide) 
+            if (slide)
             {
               dpms_disable();
             }
@@ -1073,7 +1083,6 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
 #endif
           case 'F':
           case 'H':
-          case 'J':
           case 'K':
           case 'L':
           case 'M':

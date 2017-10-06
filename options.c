@@ -62,6 +62,7 @@ static struct option long_options[] =
     {"file",             1, NULL, 'F'},
     {"disable_grab",     0, NULL, 'G'},
     {"statusbar",        0, NULL, 'I'},
+    {"showJPEGcomments", 0, NULL, 'J'},
     {"mtime_sort",       0, NULL, 'K'},
     {"merged_case_sort", 0, NULL, 'M'},
     {"numeric_sort",     0, NULL, 'N'},
@@ -317,6 +318,8 @@ void options_read(int argc, char **argv, qiv_image *q)
             case 'G': disable_grab=1;
                 break;
             case 'I': force_statusbar=1;
+                break;
+            case 'J': comment_window=1;
                 break;
             case 'K': mtime_sort = 1;
                 break;

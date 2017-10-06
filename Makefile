@@ -6,8 +6,9 @@
 # Directory where qiv will be installed under.
 PREFIX = /usr/local
 
-# Font to use for statusbar in fullscreen mode
+# Fonts to use for statusbar and comments
 STATUSBAR_FONT = "Monospace 9"
+COMMENT_FONT = "Monospace 20"
 
 # Cursor to use on qiv windows - see
 # /usr/X11R6/include/X11/cursorfont.h for more choices.
@@ -75,6 +76,7 @@ HEADERS   = qiv.h
 DEFINES   = $(patsubst %,-DEXTN_%, $(EXTNS)) \
             $(GETOPT_LONG) \
             -DSTATUSBAR_FONT='$(STATUSBAR_FONT)' \
+            -DCOMMENT_FONT='$(COMMENT_FONT)' \
             -DCENTER=$(CENTER) \
             -DFILTER=$(FILTER) \
             -DCURSOR=$(CURSOR) \

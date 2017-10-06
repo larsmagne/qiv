@@ -12,8 +12,9 @@ GdkRectangle    *monitor;
 GdkColormap	*cmap; /* global colormap */
 char		*image_bg_spec = IMAGE_BG;
 GdkColor	image_bg; /* default background */
-GdkColor	text_bg; /* statusbar and help backgrounf */
+GdkColor	text_bg; /* statusbar and help background */
 GdkColor	error_bg; /* for the error window/screen */
+GdkColor	comment_bg; /* comment background */
 int		images;	/* Number of images in current collection */
 char		**image_names = NULL; /* Filenames of the images */
 int		image_idx = 0; /* Index of current image displayed. 0 = 1st image */
@@ -22,7 +23,7 @@ time_t          current_mtime; /* modification time of file currently loaded */
 qiv_deletedfile *deleted_files;
 int		delete_idx;
 char    select_dir[FILENAME_LEN];
-char    *comment=NULL; 
+char    *comment=NULL;
 gint    jpeg_prog=0;
 off_t   file_size;
 
@@ -30,6 +31,9 @@ off_t   file_size;
 PangoLayout     *layout;
 PangoFontMetrics *metrics;
 PangoFontDescription *fontdesc;
+PangoLayout     *layoutComment;
+PangoFontMetrics *metricsComment;
+PangoFontDescription *fontdescComment;
 
 /* Options and such */
 
@@ -47,6 +51,7 @@ int	fullscreen; /* TRUE if fullscreen mode */
 int	maxpect; /* TRUE if autozoom (fit-to-screen) mode */
 int	statusbar_fullscreen = 1; /* TRUE if statusbar in fullscreen is turned on (default) */
 int	statusbar_window = 0; /* FALSE if statusbar in window is turned off (default) */
+int	comment_window = 0; /* FALSE if comment in window is turned off (default) */
 int	slide; /* 1=slide show running */
 int	scale_down; /* resize down if image x/y > screen */
 int	recursive; /* descend recursively */
@@ -127,6 +132,7 @@ const char *helpstrs[] =
     "E                    display Exif information",
 #endif
     "i                    statusbar on/off",
+    "J                    JPEG comments on/off",
     "I                    iconify window",
     "w                    watch file on/off",
     "x                    center image on background",

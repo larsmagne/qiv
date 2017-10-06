@@ -8,6 +8,7 @@
 #include <Imlib2.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <ctype.h>
 #ifdef SUPPORT_LCMS
 #include <lcms2.h>
 #include <jpeglib.h>
@@ -33,6 +34,8 @@
 #define IMAGE_BG "black"
 #define STATUSBAR_BG "#FFB900"
 #define STATUSBAR_FS 8  /* default fontsize if none is given */
+#define COMMENT_BG "#DDDDDD"
+#define COMMENT_FS 20  /* default fontsize if none is given */
 #define ERROR_BG "#0000FF"
 #define DEFAULT_BRIGHTNESS 256
 #define DEFAULT_CONTRAST 256
@@ -61,6 +64,7 @@ typedef struct _qiv_image {
   GdkGC *bg_gc;     /* image window background */
   GdkGC *text_gc;   /* statusbar text color */
   GdkGC *status_gc; /* statusbar background */
+  GdkGC *comment_gc; /* comment background */
 
   /* These are used to work out how to redraw in fullscreen mode */
   gint win_ox, win_oy, win_ow, win_oh; /* coordinates currently drawn at */
@@ -73,6 +77,7 @@ typedef struct _qiv_image {
 //  char        infotext[BUF_LEN];
   gchar win_title[BUF_LEN];
   gint text_len, text_w, text_h;
+  gint comment_w, comment_h;
 } qiv_image;
 
 typedef struct _qiv_mgl {
@@ -106,6 +111,7 @@ extern char             *image_bg_spec;
 extern GdkColor         image_bg;
 extern GdkColor         text_bg;
 extern GdkColor         error_bg;
+extern GdkColor         comment_bg;
 extern int              images;
 extern char             **image_names;
 extern int              image_idx;
@@ -117,6 +123,9 @@ extern char             select_dir[FILENAME_LEN];
 extern PangoLayout     *layout;
 extern PangoFontDescription *fontdesc;
 extern PangoFontMetrics *metrics;
+extern PangoLayout     *layoutComment;
+extern PangoFontDescription *fontdescComment;
+extern PangoFontMetrics *metricsComment;
 extern char             *comment;
 extern gint             jpeg_prog;
 extern off_t            file_size;
@@ -135,6 +144,7 @@ extern int     fullscreen;
 extern int     maxpect;
 extern int     statusbar_fullscreen;
 extern int     statusbar_window;
+extern int     comment_window;
 extern int     slide;
 extern int     scale_down;
 extern int     recursive;

@@ -341,8 +341,6 @@ void run_command(qiv_image *q, char *n, char *filename, int *numlines, const cha
     for (i = 0; i < *numlines; i++) {
       lines[i] = lines[i+1];
     }
-    update_image(q, FULL_REDRAW);
-    return;
   }
 
   stat(filename, &after);
@@ -351,7 +349,7 @@ void run_command(qiv_image *q, char *n, char *filename, int *numlines, const cha
   if (before.st_size == after.st_size &&
       before.st_ctime == after.st_ctime &&
       before.st_mtime == after.st_mtime)
-    update_image(q, MIN_REDRAW);
+    update_image(q, FULL_REDRAW);
   else
     qiv_load_image(q);
 }
@@ -777,7 +775,7 @@ char *get_icc_profile(char *filename)
   if ((infile = fopen(filename, "rb")) == NULL)
   {
     fprintf(stderr, "can't open %s\n", filename);
-    return NULL; 
+    return NULL;
   }
 
   if (fread(pic_tst, 1, 4, infile) != 4)
@@ -792,7 +790,7 @@ char *get_icc_profile(char *filename)
     free(comment);
     comment=NULL;
   }
-  
+
   /* Is pic a jpg? */
   if ( (pic_tst[0] == 0xff) && (pic_tst[1] == 0xd8) && (pic_tst[2] == 0xff) &&  ((pic_tst[3]& 0xf0) == 0xe0) )
   {
@@ -801,14 +799,17 @@ char *get_icc_profile(char *filename)
     cinfo.err = jpeg_std_error(&jerr);
 
     jpeg_create_decompress(&cinfo);
-    jpeg_stdio_src(&cinfo, infile); 
+    jpeg_stdio_src(&cinfo, infile);
     jpeg_save_markers(&cinfo, 0xE2, 0xFFFF);
     jpeg_save_markers(&cinfo, JPEG_COM, 0xFFFF);
     jpg_ok = jpeg_read_header(&cinfo, 0);
+    if (jpg_ok == 0) {
+      qiv_exit(2);
+    }
     fclose(infile);
     jpeg_prog=cinfo.progressive_mode;
 
-    for (marker = cinfo.marker_list; marker != NULL; marker = marker->next) 
+    for (marker = cinfo.marker_list; marker != NULL; marker = marker->next)
     {
       if(strncmp(icc_string, (const char *)marker->data, 11)==0)
       {
@@ -833,6 +834,15 @@ char *get_icc_profile(char *filename)
         comment=calloc(1+marker->data_length,1);
         if(comment==NULL) return NULL;
         strncpy(comment, (char *) marker->data, marker->data_length);
+
+        /* simulate perl's chomp */
+        int len = strlen(comment);
+        while (isspace(comment[len-1]))
+        {
+          comment[len-1] = 0;
+          if(--len==0)
+            break;
+        }
       }
     }
     if(i==0)
@@ -863,7 +873,7 @@ char *get_icc_profile(char *filename)
     return icc_ptr;
   }
   /* is pic a tiff?*/
-  else if((pic_tst[0] == pic_tst[1]) && ((pic_tst[0] == 0x49)||(pic_tst[0] == 0x4d)) && (pic_tst[2] == 0x2a) &&  (pic_tst[3] == 0x00)) 
+  else if((pic_tst[0] == pic_tst[1]) && ((pic_tst[0] == 0x49)||(pic_tst[0] == 0x4d)) && (pic_tst[2] == 0x2a) &&  (pic_tst[3] == 0x00))
   {
     uint16 count;
     unsigned char *data;
@@ -1002,7 +1012,7 @@ char **get_exif_values(char *filename)
     snprintf(line, 255, "%-21s: %s\n", "Comment", comment);
     exif_lines[j++]=line;
   }
-    
+
   return exif_lines;
 }
 #endif
@@ -1019,7 +1029,7 @@ void dpms_check()
   CARD16 power_level;
 
   if(DPMSQueryExtension(disp, &not_needed, &not_needed))
-  { 
+  {
     if(DPMSCapable(disp))
     {
       DPMSInfo(disp, &power_level, &dpms_enabled);
