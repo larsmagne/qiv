@@ -25,7 +25,7 @@ extern int optind, opterr, optopt;
 
 #define LONGOPT_VIKEYS 128
 
-static char *short_options = "ab:c:Cd:efg:hilLmno:pq:rstuvw:xyzA:BDF:GIKMNPRSTW:X:Y:Z:";
+static char *short_options = "ab:c:Cd:efg:hilLmno:pq:rstuvw:xyzA:BDF:GIJKMNPRSTW:X:Y:Z:";
 static struct option long_options[] =
 {
     {"do_grab",          0, NULL, 'a'},
