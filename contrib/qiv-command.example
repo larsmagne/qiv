@@ -52,9 +52,9 @@ case "$pressed_key" in
     # exiftool "$filename"
     # jhead "$filename"
     # more sophisticated for better infos (adjust paths!)
-#    if [ -r $HOME/local/var/exiftool.grep-pattern.for.qiv-command ]; then
-#      exiftool "$filename" | grep -f $HOME/local/var/exiftool.grep-pattern.for.qiv-command \
-#       | grep -v 'Orientation                     : Horizontal (normal)'
+#    if [ -r $HOME/local/var/exiftool.tags.for.qiv-command ]; then
+#      exiftool `xargs < $HOME/local/var/exiftool.tags.for.qiv-command` "$filename" \
+#       | grep -v -f $HOME/local/var/exiftool.grep-exclude-pattern.for.qiv-command
 #      jhead -nofinfo "$filename" | grep -i -E '^(JPEG Quality |Caption )'
 #    else
 #      jhead -nofinfo "$filename"
