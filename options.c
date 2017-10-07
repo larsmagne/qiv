@@ -23,7 +23,9 @@
 extern char *optarg;
 extern int optind, opterr, optopt;
 
-#define LONGOPT_VIKEYS 128
+/* put longopt-only options to non ascii values */
+#define LONGOPT_VIKEYS   256
+#define LONGOPT_TRASHBIN 257
 
 static char *short_options = "ab:c:Cd:efg:hilLmno:pq:rstuvw:xyzA:BDF:GIJKMNPRSTW:X:Y:Z:";
 static struct option long_options[] =
@@ -76,6 +78,7 @@ static struct option long_options[] =
     {"source_profile",   1, NULL, 'Y'},
     {"display_profile",  1, NULL, 'Z'},
 #endif
+    {"trashbin",         0, NULL, LONGOPT_TRASHBIN},
     {"vikeys",           0, NULL, LONGOPT_VIKEYS},
     {0,                  0, NULL, 0}
 };
@@ -348,6 +351,9 @@ void options_read(int argc, char **argv, qiv_image *q)
 	        cms_transform = 1;
 	        break;
 #endif
+            case LONGOPT_TRASHBIN:
+                trashbin=1;
+                break;
             case LONGOPT_VIKEYS: vikeys=1;
               break;
             case 0:

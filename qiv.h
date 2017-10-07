@@ -166,6 +166,7 @@ extern qiv_mgl magnify_img; // [lc]
 extern int     autorotate;
 extern int     rotation;
 extern int     vikeys;
+extern int     trashbin;
 
 extern const char   *helpstrs[], **helpkeys, *image_extensions[];
 
@@ -226,6 +227,7 @@ extern void options_read(int, char **, qiv_image *);
 /* utils.c */
 
 extern int  move2trash(void);
+extern int  move2trashbin(void);
 extern int  copy2select(void);
 extern int  undelete_image(void);
 extern void jump2image(char *);

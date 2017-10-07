@@ -190,6 +190,10 @@ This option is useful when configuring qiv to be used with a file manager.
 qiv will scan the directory of the clicked image and allow you to scroll
 through those images.
 .TP
+.B \-\-trashbin
+Use users trash bin instead of .qiv-trash. Undeleting an image will not
+work, open the trash bin and restore the image instead.
+.TP
 .B \-\-vikeys
 Enable movement with h/j/k/l, vi-style (HJKL will do what hjkl previously did)
 .SH EXAMPLES
@@ -218,7 +222,8 @@ q/ESC/middle mouse                 exit
 F11/F12             in/decrease slideshow delay (1 second)
 a/A                 copy picture to .qiv-select
 d/D/del             move picture to .qiv-trash (-R disables this feature)
-u                   undelete the previously trashed image
+                    (if started with --trashbin picture is moved to users trash bin)
+u                   undelete the previously trashed image (not working if --trashbin is used)
 +/=/wheel r/btn fwd zoom in (10%)
 -/wheel l/btn back  zoom out (10%)
 e                   center mode on/off
@@ -272,12 +277,15 @@ Wheel Right/Button forward          zoom in (10%)
 .SH DELETING
 qiv doesn't actually delete files. It creates a directory named ".qiv-trash"
 and moves the images to that directory. qiv maintains the directory
-structure of your "deleted" images.  You can also undelete the most
+structure of your "deleted" images. You can also undelete the most
 recently trashed images in reverse order, which moves each file back
-into its original directory.  There is a limit to how many deletions
+into its original directory. There is a limit to how many deletions
 can be undone, but it should be pretty large (currently 1024 items).
 Sometimes this feature might be unwanted. To prevent accidents you can
-specify the "-R" option to disable this feature.
+specify the "-R" option to disable this feature. If the "--trashbin" option
+is used qiv will move the deleted pictures to the users trash bin. In that
+case undeleting with pressing "u" will not work. Open the trash bin and
+restore the image instead.
 .SH IMWHEEL SUPPORT
 With XFree86 3.3.2+ server, using the wheel is seen as button 4 and
 5 pressed. You only have to use "IMPS/2" or "Intellimouse" for

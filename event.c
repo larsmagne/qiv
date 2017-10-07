@@ -152,7 +152,7 @@ void qiv_display_text_window(qiv_image *q, const char *infotextdisplay,
   /* Display Push Any Key... message */
   pango_layout_set_text(layout, continue_msg, -1);
   pango_layout_get_pixel_size (layout, &temp, NULL);
-  gdk_draw_layout (q->win, q->text_gc, 
+  gdk_draw_layout (q->win, q->text_gc,
                    x + width/2 - temp/2,
                    y + height/2 - text_h/2 - descent + (i+1) * (ascent + descent),
                    layout);
@@ -864,19 +864,26 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
 
           case GDK_KEY_Delete:
           case 'd':
+          {
+            int ret;
             if (!readonly) {
-              if (move2trash() == 0)
+              if (trashbin == 1)
+                ret = move2trashbin();
+              else
+                ret = move2trash();
+
+              if (ret == 0)
                 snprintf(infotext, sizeof infotext, "(Deleted last image)");
               else
                 snprintf(infotext, sizeof infotext, "(Delete FAILED)");
               qiv_load_image(q);
             }
             break;
+          }
 
             /* Undelete image */
-
           case 'u':
-            if (!readonly) {
+            if (!readonly && !trashbin) {
               if (undelete_image() == 0)
                 snprintf(infotext, sizeof infotext, "(Undeleted)");
               else
@@ -884,7 +891,6 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
               qiv_load_image(q);
             }
             break;
-
             /* Copy image to selected directory */
 
           case 'a':
@@ -1029,7 +1035,7 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
             }
             break;
           case ',':
-            if(fullscreen) 
+            if(fullscreen)
             {
               disable_grab ^= 1;
               snprintf(infotext, sizeof infotext, "(grab %s)", (disable_grab ? "off" : "on"));

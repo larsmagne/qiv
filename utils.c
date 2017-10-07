@@ -118,6 +118,41 @@ int move2trash()
   return 0;
 }
 
+/* move current image to trash bin */
+int move2trashbin()
+{
+  GFile  *del_file;
+  GError *del_error=NULL;
+  int    i;
+  int    ret=0;
+
+  del_file=g_file_new_for_path(image_names[image_idx]);
+
+  if(g_file_trash(del_file, NULL, &del_error))
+  {
+    --images;
+    for(i=image_idx;i<images;++i) {
+      image_names[i] = image_names[i+1];
+    }
+
+    /* If deleting the last file out of x */
+    if(images == image_idx)
+      image_idx = 0;
+
+    /* If deleting the only file left */
+    if(!images)
+      exit(0);
+  }
+  else
+  {
+    printf("%s\n", del_error->message);
+    g_error_free(del_error);
+    ret=1;
+  }
+  g_object_unref(del_file);
+  return ret;
+}
+
 /* copy current image to SELECTDIR */
 int copy2select()
 {
@@ -349,7 +384,7 @@ void run_command(qiv_image *q, char *n, char *filename, int *numlines, const cha
   if (before.st_size == after.st_size &&
       before.st_ctime == after.st_ctime &&
       before.st_mtime == after.st_mtime)
-    update_image(q, FULL_REDRAW);
+    update_image(q, MIN_REDRAW);
   else
     qiv_load_image(q);
 }
@@ -500,6 +535,8 @@ void show_help(char *name, int exit_status)
           "    --root_t, -y           Set tiled desktop background and exit\n"
           "    --root_s, -z           Set stretched desktop background and exit\n"
           "    --scale_down, -t       Shrink image(s) larger than the screen to fit\n"
+          "    --trashbin             Use users trash bin instead of .qiv_trash when deleting\n"
+          "                           (undelete key will not work in that case)\n"
           "    --transparency, -p     Enable transparency for transparent images\n"
           "    --watch, -T            Reload the image if it has changed on disk\n"
           "    --recursivedir, -u     Recursively include all files\n"
@@ -514,6 +551,8 @@ void show_help(char *name, int exit_status)
           "    --source_profile, -Y x Use color profile file x as source profile for all images\n"
           "    --display_profile,-Z x Use color profile file x as display profile for all images\n"
 #endif
+          "    --vikeys               Enable movement with h/j/k/l, vi-style\n"
+          "                           (HJKL will do what hjkl previously did)\n"
           "    --version, -v          Print version information and exit\n"
           "\n"
           "Slideshow options:\n"
@@ -522,8 +561,7 @@ void show_help(char *name, int exit_status)
           "    --random, -r           Random order\n"
           "    --shuffle, -S          Shuffled order\n"
           "    --delay, -d x          Wait x seconds between images [default=%d]\n"
-          "    --vikeys               Enable movement with h/j/k/l, vi-style\n"
-          "                           (HJKL will do what hjkl previously did)\n"          "\n"
+          "\n"
           "Keys:\n", SLIDE_DELAY/1000);
 
     /* skip header and blank line */
