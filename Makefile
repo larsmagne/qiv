@@ -149,8 +149,8 @@ install: $(PROGRAM)
 	  echo install -d -m 0755 $(PREFIX)/man/man1; \
 	  install -d -m 0755 $(PREFIX)/man/man1; \
 	fi
-	install -m 0644 $(PROGRAM).1 $(PREFIX)/man/man1
-	$(COMPRESS_PROG) $(PREFIX)/man/man1/$(PROGRAM).1
+	install -m 0644 $(PROGRAM).1 $(PREFIX)/share/man/man1
+	$(COMPRESS_PROG) $(PREFIX)/share/man/man1/$(PROGRAM).1
 	@if [ ! -e $(PREFIX)/share/pixmaps ]; then \
 	  echo install -d -m 0755 $(PREFIX)/share/pixmaps; \
 	  install -d -m 0755 $(PREFIX)/share/pixmaps; \

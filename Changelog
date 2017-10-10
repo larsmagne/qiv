@@ -36,6 +36,7 @@ Authors:
 
 2.3.2pre
 ========
+  10.10.2017        [tw] add specfile to build rpm for CentOS
   07.10.2017        [tw] add option --trashbin to use trash bin instead
                          of .qiv-trash when deleting images
   06.10.2017        [as] add ability (and options) to display JPEG comments
