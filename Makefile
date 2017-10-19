@@ -51,6 +51,7 @@ EXIF = -DHAVE_EXIF
 ######################################################################
 
 CC        = gcc
+PKG_CONFIG ?= pkg-config
 #CFLAGS    = -O0 -g -Wall
 CFLAGS    = -O2 -Wall \
 	    -fcaller-saves -ffast-math -fno-strength-reduce \
@@ -59,8 +60,8 @@ CFLAGS    = -O2 -Wall \
 #	    -fcaller-saves -ffast-math -fno-strength-reduce \
 #	    -fthread-jumps #-march=pentium #-DSTAT_MACROS_BROKEN
 
-INCLUDES  := $(shell pkg-config --cflags gdk-2.0 imlib2)
-LIBS      := $(shell pkg-config --libs gdk-2.0 imlib2) -lX11 -lXext -lgio-2.0
+INCLUDES  := $(shell $(PKG_CONFIG) --cflags gdk-2.0 imlib2)
+LIBS      := $(shell $(PKG_CONFIG) --libs gdk-2.0 imlib2) -lX11 -lXext -lgio-2.0
 
 # [as] thinks that this is not portable enough:
 # [lc] I use a virtual screen of 1600x1200, and the resolution is 1024x768,
@@ -90,13 +91,13 @@ OBJS_G   += lib/getopt.g lib/getopt1.g
 endif
 
 ifdef LCMS
-INCLUDES  += $(shell pkg-config --cflags lcms2)
-LIBS      += $(shell pkg-config --libs lcms2) -ljpeg -ltiff
+INCLUDES  += $(shell $(PKG_CONFIG) --cflags lcms2)
+LIBS      += $(shell $(PKG_CONFIG) --libs lcms2) -ljpeg -ltiff
 endif
 
 ifdef EXIF
-INCLUDES  += $(shell pkg-config --cflags libexif)
-LIBS      += $(shell pkg-config --libs libexif)
+INCLUDES  += $(shell $(PKG_CONFIG) --cflags libexif)
+LIBS      += $(shell $(PKG_CONFIG) --libs libexif)
 endif
 
 ifdef MAGIC
