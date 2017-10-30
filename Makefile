@@ -50,7 +50,10 @@ EXIF = -DHAVE_EXIF
 # Do not edit below here!
 ######################################################################
 
-CC        = gcc
+ifeq ($(origin CC),default)
+CC = gcc
+endif
+
 PKG_CONFIG ?= pkg-config
 #CFLAGS    = -O0 -g -Wall
 CFLAGS    = -O2 -Wall \
