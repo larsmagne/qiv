@@ -179,7 +179,7 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
   // (because the user might have moved the window our since last redraw)
   if (!fullscreen) {
     gdk_window_get_position(q->win, &q->win_x, &q->win_y);
-//    g_print("position   : q->win_x = %d, q->win_y = %d, q->win_w = %d, mon = %d\n", q->win_x, q->win_y, q->win_w,q->mon_id);
+//    g_print("position   : q->win_x = %d, q->win_y = %d, q->win_w = %d, mon = %d, typ = %d\n", q->win_x, q->win_y, q->win_w,q->mon_id,ev->type);
   }
   q->mon_id = gdk_screen_get_monitor_at_window(screen, q->win);
 
@@ -190,18 +190,21 @@ void qiv_handle_event(GdkEvent *ev, gpointer data)
 
     case GDK_EXPOSE:
       if (!q->exposed) {
-        q->exposed = 1;
         qiv_set_cursor_timeout(q);
+        if(center) center_image(q);
       }
-      if(center) center_image(q);
       if(fullscreen)
       {
         update_image(q, FULL_REDRAW);
       }
       else
       {
-        update_image(q, MIN_REDRAW);
+        if(q->exposed)
+          update_image(q, MIN_REDRAW);
+        else
+          update_image(q, FULL_REDRAW);
       }
+      q->exposed = 1;
       break;
 
     case GDK_LEAVE_NOTIFY:

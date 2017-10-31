@@ -203,6 +203,7 @@ void qiv_load_image(qiv_image *q)
   Imlib_Image * im=NULL;
   int has_alpha=0, rot;
 
+  q->exposed=0;
   gettimeofday(&load_before, 0);
 
   if (imlib_context_get_image())
@@ -719,6 +720,7 @@ void update_image(qiv_image *q, int mode)
     {
       if(mode != MIN_REDRAW)
       {
+        GdkPixmap * pix_ptr = NULL;
         if (q->p) {
           imlib_free_pixmap_and_mask(GDK_PIXMAP_XID(q->p));
           g_object_unref(q->p);
@@ -732,11 +734,18 @@ void update_image(qiv_image *q, int mode)
         elapsed = ((after.tv_sec +  after.tv_usec / 1.0e6) -
             (before.tv_sec + before.tv_usec / 1.0e6));
 
-        /*TODO: Hier gibt es XID collision, wenn am Bild eigentlich nix geändert wurde*/
-        q->p = gdk_pixmap_foreign_new_for_screen(screen, x_pixmap, q->win_w, q->win_h, 24);
+        pix_ptr = gdk_pixmap_lookup (x_pixmap);
+        if(pix_ptr == NULL)
+        {
+          q->p = gdk_pixmap_foreign_new_for_screen(screen, x_pixmap, q->win_w, q->win_h, 24);
+        }
+        else
+        {
+          q->p = pix_ptr;
+          g_object_ref(q->p);
+        }
         gdk_drawable_set_colormap(GDK_DRAWABLE(q->p),
             gdk_drawable_get_colormap(GDK_DRAWABLE(q->win)));
-//        m = x_mask == None ? NULL : gdk_pixmap_foreign_new(x_mask);
         m = x_mask == None ? NULL : gdk_pixmap_foreign_new_for_screen(screen, x_mask, q->win_w, q->win_h, 1);
       }
 
@@ -778,9 +787,11 @@ void update_image(qiv_image *q, int mode)
     if(first) {
       gdk_window_show(q->win);
       first = 0;
+      q->exposed=0;
     }
 
-    gdk_window_move_resize(q->win, q->win_x, q->win_y, q->win_w, q->win_h);
+    if(mode != MIN_REDRAW)
+       gdk_window_move_resize(q->win, q->win_x, q->win_y, q->win_w, q->win_h);
 
     if (!q->error) {
       gdk_window_set_back_pixmap(q->win, q->p, FALSE);

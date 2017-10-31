@@ -73,7 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Thu Oct 10 2017 Thomas Wiegner <wiegner@gmx.de> 2.3.2
-- qiv v2.3.1 plus additional changes:
+- qiv changes since v2.3.1:
+  + [tw] fix: window sometimes recentered, when moved around with mouse
+  + [as] fix Makefile for cross-compiling: Make pkg-config substitutable (Debian Bug#879108)
   + [tw] add specfile to build rpm for CentOS
   + [tw] add option --trashbin to use trash bin instead
          of .qiv-trash when deleting images
