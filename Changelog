@@ -34,7 +34,7 @@ Authors:
   pw: Peter deWachter         <pdewacht@gmail.com>
   ap: Akos Pasztory           <akos.pasztory@gmail.com>
 
-2.3.2pre
+2.3.2
 ========
   31.10.2017        [tw] fix: window sometimes recentered, when moved around with mouse
   19.10.2017        [as] fix Makefile for cross-compiling: Make pkg-config substitutable (Debian Bug#879108)
