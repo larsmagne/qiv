@@ -756,6 +756,7 @@ gboolean qiv_watch_file (gpointer data)
           if(time(NULL)-statbuf.st_mtime > 0)
           {
               reload_image(q);
+              check_size(q, FALSE);
               update_image(q, REDRAW);
           }
   }

@@ -34,8 +34,13 @@ Authors:
   pw: Peter deWachter         <pdewacht@gmail.com>
   ap: Akos Pasztory           <akos.pasztory@gmail.com>
 
-2.3.2
+2.3.3pre
 ========
+  15.07.2018        [tw] fix: don't ignore maxaspect and scale down options when
+                         reloading image due to watch option on. (Issue #8)
+
+2.3.2
+=====
   31.10.2017        [tw] fix: window sometimes recentered, when moved around with mouse
   19.10.2017        [as] fix Makefile for cross-compiling: Make pkg-config substitutable (Debian Bug#879108)
   10.10.2017        [tw] add specfile to build rpm for CentOS
