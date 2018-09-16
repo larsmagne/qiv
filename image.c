@@ -75,7 +75,7 @@ Imlib_Image im_from_pixbuf_loader(char * image_name, int * has_alpha)
 
     pixels_ori = gdk_pixbuf_get_pixels(pixbuf_ori);
     /* create checkboard if image has transparency */
-    if(*has_alpha)
+    if(*has_alpha && ! transparency)
     {
       pixbuf = gdk_pixbuf_composite_color_simple(pixbuf_ori, gdk_pixbuf_get_width(pixbuf_ori),
                    gdk_pixbuf_get_height(pixbuf_ori), GDK_INTERP_NEAREST, 255, 0x08, 0x00666666, 0x00aaaaaa);
