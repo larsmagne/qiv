@@ -737,7 +737,7 @@ void update_image(qiv_image *q, int mode)
         pix_ptr = gdk_pixmap_lookup (x_pixmap);
         if(pix_ptr == NULL)
         {
-          q->p = gdk_pixmap_foreign_new_for_screen(screen, x_pixmap, q->win_w, q->win_h, 24);
+	  q->p = gdk_pixmap_foreign_new(x_pixmap);
         }
         else
         {
